@@ -1,0 +1,4 @@
+gofmt -w internal/game/game.go
+go run ./cmd/helwan-shooter
+
+go build -o HelwanShooter.exe ./cmd/helwan-shooter
