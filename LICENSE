@@ -1,22 +1,83 @@
 
-MIT License
+Helwan Source-Available License (HSAL) Version 1.0
 
 Copyright (c) 2026 Saeed Badreldin
+Part of Helwan Linux.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. DEFINITIONS
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+"Software" means the source code, documentation, and other materials
+distributed with this license.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+"Author" means Saeed Badreldin and any other copyright holder
+identified in the Software.
+
+"Commercial Use" means using, selling, licensing, distributing,
+or otherwise exploiting the Software for commercial advantage
+or monetary compensation, including its incorporation into
+commercial products or services.
+
+2. PERMITTED USE
+
+Permission is hereby granted to any person to:
+
+- View, read, study, and learn from the Software.
+- Use the Software for personal, educational, and research
+  purposes that are non-commercial.
+- Modify the Software for non-commercial purposes.
+- Redistribute original or modified copies free of charge
+  for non-commercial purposes, subject to this license.
+
+3. CONDITIONS
+
+Any redistribution of the Software or modified versions must:
+
+- Retain this license and all copyright notices.
+- Clearly identify any modifications made.
+- Preserve the original attribution to Saeed Badreldin
+  and Helwan Linux.
+- Not misrepresent the original Author or project.
+- Not impose additional restrictions that prevent recipients
+  from exercising the permissions granted by this license.
+
+4. COMMERCIAL USE
+
+Commercial Use of the Software, in whole or in part, is prohibited
+without prior written permission from the Author or the applicable
+copyright holder.
+
+Commercial permission may be granted under a separate agreement
+and may be subject to fees and additional conditions.
+
+5. OWNERSHIP
+
+The Software remains the property of its respective copyright
+holders. This license does not transfer ownership of the original
+Software or its copyright.
+
+6. THIRD-PARTY COMPONENTS
+
+This license applies only to material for which the Author has
+the legal right to grant these permissions. Third-party components
+remain subject to their respective licenses.
+
+7. TERMINATION
+
+Any rights granted under this license terminate automatically
+if the recipient violates its terms. Rights may be reinstated
+if the violation is corrected and the Author agrees in writing.
+
+8. DISCLAIMER OF WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY
+ARISING FROM THE SOFTWARE OR ITS USE.
+
+9. GOVERNING LAW
+
+The governing law and resolution of disputes shall be determined
+in accordance with applicable law and any valid agreement
+between the parties.
