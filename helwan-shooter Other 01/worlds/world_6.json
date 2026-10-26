@@ -1,0 +1,15 @@
+{
+  "world_id": 6,
+  "world_name": "Quantum Lab",
+  "description": "Subatomic instability and fast anomalies.",
+  "ammo": 24,
+  "timer": 30.0,
+  "background_type": "quantum",
+  "levels": [
+    {"level": 26, "speed": 3.0, "waves": 2, "target_types": ["normal", "fast"], "is_boss": false, "boss_hp": 0},
+    {"level": 27, "speed": 3.3, "waves": 2, "target_types": ["fading", "fast"], "is_boss": false, "boss_hp": 0},
+    {"level": 28, "speed": 3.6, "waves": 3, "target_types": ["hazard", "normal", "fast"], "is_boss": false, "boss_hp": 0},
+    {"level": 29, "speed": 3.9, "waves": 3, "target_types": ["armored", "fading"], "is_boss": false, "boss_hp": 0},
+    {"level": 30, "speed": 4.2, "waves": 1, "target_types": ["boss"], "is_boss": true, "boss_hp": 10}
+  ]
+}

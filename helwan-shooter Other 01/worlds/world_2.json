@@ -1,0 +1,15 @@
+{
+  "world_id": 2,
+  "world_name": "Neon City",
+  "description": "Fast-paced cyber targets and strict ammunition limits.",
+  "ammo": 28,
+  "timer": 80,
+  "background_type": "neon",
+  "levels": [
+    { "level": 6, "speed": 1.4, "waves": 2, "target_types": ["normal", "fast"], "is_boss": false, "boss_hp": 0 },
+    { "level": 7, "speed": 1.6, "waves": 2, "target_types": ["normal", "hazard", "fast"], "is_boss": false, "boss_hp": 0 },
+    { "level": 8, "speed": 1.8, "waves": 3, "target_types": ["normal", "armored", "ammo"], "is_boss": false, "boss_hp": 0 },
+    { "level": 9, "speed": 2.0, "waves": 3, "target_types": ["fast", "hazard", "armored"], "is_boss": false, "boss_hp": 0 },
+    { "level": 10, "speed": 1.5, "waves": 1, "target_types": [], "is_boss": true, "boss_hp": 7 }
+  ]
+}
