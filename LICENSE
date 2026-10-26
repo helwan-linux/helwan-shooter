@@ -1,51 +1,53 @@
 
 Helwan Shooter Proprietary License
 Copyright (c) 2026 Saeed Badreldin
-
 All rights reserved.
 
 Helwan Shooter is proprietary software developed by Saeed Badreldin
 as part of Helwan Linux.
 
-1. OWNERSHIP
+1. COPYRIGHT AND OWNERSHIP
 
-The copyright and other intellectual property rights in the original
-work remain with their respective owners. No ownership rights are
-transferred under this license.
+The original source code, original artwork, and original documentation
+of Helwan Shooter are protected by applicable copyright laws.
+Ownership remains with their respective copyright holders.
 
 2. PERMITTED USE
 
-You may download and inspect the source code for personal evaluation
-and educational purposes.
+You may view and study the source code for personal, non-commercial
+educational and evaluation purposes.
 
 You may compile and run the software for personal, non-commercial use.
 
 3. RESTRICTIONS
 
-Unless you have obtained prior written permission from the relevant
-copyright owner, you may not:
+Without prior written permission from the applicable copyright holder,
+you may not:
 
-- Copy or redistribute the software, in whole or in substantial part.
-- Publish, distribute, or sell modified versions of the software.
+- Redistribute or publish copies of the software.
 - Sell, sublicense, or commercially exploit the software.
-- Incorporate the original work into a commercial product.
-- Remove or misrepresent copyright notices or authorship information.
+- Publish or distribute modified versions of the software.
+- Incorporate copyrighted portions of the software into a commercial
+  product.
+- Remove or misrepresent copyright and authorship notices.
 
-4. THIRD-PARTY MATERIALS
+4. THIRD-PARTY COMPONENTS
 
 Third-party libraries, assets, fonts, sounds, and other components
-are governed by their respective licenses. This license does not
-replace or override those licenses.
+remain subject to their respective licenses. This license does not
+override any rights or permissions granted by those licenses.
 
 5. NO WARRANTY
 
 To the maximum extent permitted by applicable law, the software is
-provided "AS IS", without warranties of any kind.
+provided "AS IS", without warranty of any kind.
 
-6. RESERVATION OF RIGHTS
+6. PERMISSIONS AND RESERVED RIGHTS
 
-All rights not expressly granted by this license are reserved by
-the applicable copyright owner.
+Any use not expressly permitted by this license requires prior written
+permission from the applicable copyright holder.
+
+All rights not expressly granted are reserved.
 
 For licensing and commercial permissions, contact:
 
