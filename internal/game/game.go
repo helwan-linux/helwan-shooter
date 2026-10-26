@@ -223,16 +223,71 @@ func (g *Game) initDailySeed() {
 }
 
 func (g *Game) loadWorldConfig(worldNum int) {
-	filename := filepath.Join("worlds", fmt.Sprintf("world_%d.json", worldNum))
-	data, err := os.ReadFile(filename)
-	if err != nil {
-		filename = filepath.Join("..", "..", "worlds", fmt.Sprintf("world_%d.json", worldNum))
-		data, err = os.ReadFile(filename)
-		if err != nil {
-			return
-		}
+	if worldNum < 1 || worldNum > worldCount {
+		worldNum = 1
 	}
-	_ = json.Unmarshal(data, &g.currentWorldCfg)
+
+	filename := fmt.Sprintf("world_%d.json", worldNum)
+	candidates := []string{
+		filepath.Join("worlds", filename),
+		filepath.Join("..", "..", "worlds", filename),
+	}
+
+	// Also search relative to the executable so launching from a desktop
+	// shortcut does not depend on the current working directory.
+	if exe, err := os.Executable(); err == nil {
+		exeDir := filepath.Dir(exe)
+		candidates = append(candidates,
+			filepath.Join(exeDir, "worlds", filename),
+			filepath.Join(exeDir, "..", "share", "helwan-shooter", "worlds", filename),
+			filepath.Join(exeDir, "..", "..", "share", "helwan-shooter", "worlds", filename),
+		)
+	}
+
+	loaded := false
+	for _, path := range candidates {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			continue
+		}
+
+		var cfg WorldConfigJSON
+		if err := json.Unmarshal(data, &cfg); err != nil {
+			continue
+		}
+		if cfg.WorldID != 0 && cfg.WorldID != worldNum {
+			continue
+		}
+		if cfg.Timer <= 0 || len(cfg.Levels) == 0 {
+			continue
+		}
+
+		g.currentWorldCfg = cfg
+		loaded = true
+		break
+	}
+
+	if loaded {
+		return
+	}
+
+	// Safe fallback: the game remains playable even when world JSON files
+	// are missing or cannot be read from the installation directory.
+	g.currentWorldCfg = WorldConfigJSON{
+		WorldID:        worldNum,
+		WorldName:      worldNames[worldNum-1],
+		Description:    worldDescriptions[worldNum-1],
+		Ammo:           30,
+		Timer:          45.0,
+		BackgroundType: "default",
+		Levels: []LevelConfigJSON{
+			{Level: (worldNum-1)*levelsPerWorld + 1, Speed: 2.5, Waves: 3, TargetTypes: []string{"normal"}},
+			{Level: (worldNum-1)*levelsPerWorld + 2, Speed: 3.0, Waves: 3, TargetTypes: []string{"normal", "fast"}},
+			{Level: (worldNum-1)*levelsPerWorld + 3, Speed: 3.5, Waves: 4, TargetTypes: []string{"normal", "armored"}},
+			{Level: (worldNum-1)*levelsPerWorld + 4, Speed: 4.0, Waves: 4, TargetTypes: []string{"bonus", "fast"}},
+			{Level: (worldNum-1)*levelsPerWorld + 5, Speed: 4.5, Waves: 1, TargetTypes: []string{"boss"}, IsBoss: true, BossHP: 10},
+		},
+	}
 }
 
 func (g *Game) savePath() string {
@@ -354,6 +409,13 @@ func (g *Game) startLevel(level int) {
 	idx := (level - 1) % levelsPerWorld
 	if idx < len(g.currentWorldCfg.Levels) {
 		g.currentLevelCfg = g.currentWorldCfg.Levels[idx]
+	} else {
+		g.currentLevelCfg = LevelConfigJSON{
+			Level:       level,
+			Speed:       3.0,
+			Waves:       3,
+			TargetTypes: []string{"normal"},
+		}
 	}
 
 	g.resetMatchState()
@@ -393,10 +455,20 @@ func (g *Game) resetMatchState() {
 	g.combo = 0
 	g.maxCombo = 0
 	g.ammo = g.currentWorldCfg.Ammo
+	if g.ammo <= 0 {
+		g.ammo = 30
+	}
+
+	g.timer = g.currentWorldCfg.Timer
+	if g.timer <= 0 {
+		g.timer = 45.0
+	}
+
 	if g.survivalMode {
 		g.ammo = 999
+		g.timer = 60.0
 	}
-	g.timer = g.currentWorldCfg.Timer
+
 	g.lastTick = time.Now()
 	g.targets = nil
 	g.effects = nil
