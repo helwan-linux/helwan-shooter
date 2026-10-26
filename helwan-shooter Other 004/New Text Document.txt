@@ -1,0 +1,6 @@
+go mod tidy
+go run ./cmd/helwan-shooter
+
+go build -o helwan-shooter ./cmd/helwan-shooter
+
+go build -o helwan-shooter.exe ./cmd/helwan-shooter
