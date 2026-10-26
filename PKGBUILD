@@ -1,10 +1,9 @@
-
 # Maintainer: Saeed Badreldin <helwanlinux@gmail.com>
 # Part of Helwan Linux
 
 pkgname=shooter
 pkgver=0.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Mouse-aim arcade target-shooting game"
 arch=('x86_64')
 url="https://github.com/helwan-linux/helwan-shooter"
@@ -37,9 +36,6 @@ package() {
     install -Dm755 shooter \
         "$pkgdir/usr/bin/shooter"
 
-    install -Dm644 helwan-shooter.desktop \
-        "$pkgdir/usr/share/applications/helwan-shooter.desktop"
-
     install -Dm644 assets/icon.png \
         "$pkgdir/usr/share/icons/hicolor/256x256/apps/shooter.png"
 
@@ -48,4 +44,22 @@ package() {
 
     install -Dm644 README.md \
         "$pkgdir/usr/share/doc/shooter/README.md"
+
+    install -d "$pkgdir/usr/share/applications"
+
+    cat > "$pkgdir/usr/share/applications/helwan-shooter.desktop" <<'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Helwan Shooter
+Comment=Play Helwan Shooter
+Exec=/usr/bin/shooter
+TryExec=/usr/bin/shooter
+Icon=shooter
+Terminal=false
+Categories=Game;ArcadeGame;
+StartupNotify=true
+EOF
+
+    chmod 644 "$pkgdir/usr/share/applications/helwan-shooter.desktop"
 }
