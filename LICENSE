@@ -1,22 +1,53 @@
 
-MIT License
-
+Helwan Shooter Proprietary License
 Copyright (c) 2026 Saeed Badreldin
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+All rights reserved.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Helwan Shooter is proprietary software developed by Saeed Badreldin
+as part of Helwan Linux.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+1. OWNERSHIP
+
+The copyright and other intellectual property rights in the original
+work remain with their respective owners. No ownership rights are
+transferred under this license.
+
+2. PERMITTED USE
+
+You may download and inspect the source code for personal evaluation
+and educational purposes.
+
+You may compile and run the software for personal, non-commercial use.
+
+3. RESTRICTIONS
+
+Unless you have obtained prior written permission from the relevant
+copyright owner, you may not:
+
+- Copy or redistribute the software, in whole or in substantial part.
+- Publish, distribute, or sell modified versions of the software.
+- Sell, sublicense, or commercially exploit the software.
+- Incorporate the original work into a commercial product.
+- Remove or misrepresent copyright notices or authorship information.
+
+4. THIRD-PARTY MATERIALS
+
+Third-party libraries, assets, fonts, sounds, and other components
+are governed by their respective licenses. This license does not
+replace or override those licenses.
+
+5. NO WARRANTY
+
+To the maximum extent permitted by applicable law, the software is
+provided "AS IS", without warranties of any kind.
+
+6. RESERVATION OF RIGHTS
+
+All rights not expressly granted by this license are reserved by
+the applicable copyright owner.
+
+For licensing and commercial permissions, contact:
+
+Saeed Badreldin
+helwanlinux@gmail.com
