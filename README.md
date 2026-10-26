@@ -70,3 +70,17 @@ Game progress is stored in `progress.json` under the `HelwanShooter` directory w
 Helwan Shooter is a work in progress. The project is still being developed, and improvements, fixes, and new features may be introduced in future updates.
 
 **Part of Helwan Linux — Arch Power, Helwan Simplicity.**
+
+
+## License
+
+Helwan Shooter is distributed under the Helwan Source-Available License (HSAL) Version 1.0.
+
+The source code is available for reading, learning, modification, and non-commercial redistribution, subject to the terms of the `LICENSE` file.
+
+Commercial use requires prior written permission from the copyright holder.
+
+Copyright (c) 2026 Saeed Badreldin.
+
+See the [LICENSE](LICENSE) file for the complete license terms.
+
