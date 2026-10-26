@@ -1,0 +1,15 @@
+{
+  "world_id": 7,
+  "world_name": "Cyber Factory",
+  "description": "Heavy industrial automated machinery.",
+  "ammo": 22,
+  "timer": 28.0,
+  "background_type": "factory",
+  "levels": [
+    {"level": 31, "speed": 3.4, "waves": 2, "target_types": ["armored", "normal"], "is_boss": false, "boss_hp": 0},
+    {"level": 32, "speed": 3.7, "waves": 3, "target_types": ["hazard", "armored"], "is_boss": false, "boss_hp": 0},
+    {"level": 33, "speed": 4.0, "waves": 3, "target_types": ["ammo", "fast", "armored"], "is_boss": false, "boss_hp": 0},
+    {"level": 34, "speed": 4.3, "waves": 3, "target_types": ["bonus", "armored", "hazard"], "is_boss": false, "boss_hp": 0},
+    {"level": 35, "speed": 4.6, "waves": 1, "target_types": ["boss"], "is_boss": true, "boss_hp": 12}
+  ]
+}

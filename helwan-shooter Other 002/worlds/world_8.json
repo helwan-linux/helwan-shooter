@@ -1,0 +1,15 @@
+{
+  "world_id": 8,
+  "world_name": "Deep Space",
+  "description": "Zero-g orbital station and drifting hazards.",
+  "ammo": 20,
+  "timer": 26.0,
+  "background_type": "space",
+  "levels": [
+    {"level": 36, "speed": 3.8, "waves": 2, "target_types": ["fast", "fading"], "is_boss": false, "boss_hp": 0},
+    {"level": 37, "speed": 4.1, "waves": 3, "target_types": ["hazard", "fast"], "is_boss": false, "boss_hp": 0},
+    {"level": 38, "speed": 4.4, "waves": 3, "target_types": ["armored", "fading", "fast"], "is_boss": false, "boss_hp": 0},
+    {"level": 39, "speed": 4.7, "waves": 3, "target_types": ["ammo", "hazard", "fast"], "is_boss": false, "boss_hp": 0},
+    {"level": 40, "speed": 5.0, "waves": 1, "target_types": ["boss"], "is_boss": true, "boss_hp": 15}
+  ]
+}

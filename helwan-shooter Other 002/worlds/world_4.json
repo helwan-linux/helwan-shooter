@@ -1,0 +1,15 @@
+{
+  "world_id": 4,
+  "world_name": "Frozen Base",
+  "description": "Slippery conditions, scarce ammo, and erratic targets.",
+  "ammo": 20,
+  "timer": 70,
+  "background_type": "frozen",
+  "levels": [
+    { "level": 16, "speed": 1.8, "waves": 2, "target_types": ["armored", "fast"], "is_boss": false, "boss_hp": 0 },
+    { "level": 17, "speed": 2.0, "waves": 2, "target_types": ["armored", "hazard", "ammo"], "is_boss": false, "boss_hp": 0 },
+    { "level": 18, "speed": 2.2, "waves": 3, "target_types": ["fading", "armored", "fast"], "is_boss": false, "boss_hp": 0 },
+    { "level": 19, "speed": 2.4, "waves": 3, "target_types": ["hazard", "armored", "bonus"], "is_boss": false, "boss_hp": 0 },
+    { "level": 20, "speed": 2.0, "waves": 1, "target_types": [], "is_boss": true, "boss_hp": 11 }
+  ]
+}
