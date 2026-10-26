@@ -1,83 +1,82 @@
+# Helwan Source-Available License (HSAL) Version 1.0
 
-Helwan Source-Available License (HSAL) Version 1.0
-
-Copyright (c) 2026 Saeed Badreldin
+Copyright (c) 2026 Saeed Badreldin  
 Part of Helwan Linux.
 
-1. DEFINITIONS
+## 1. DEFINITIONS
 
-"Software" means the source code, documentation, and other materials
-distributed with this license.
+**"Software"** means the source code, documentation, and other materials distributed by the copyright holder under this license.
 
-"Author" means Saeed Badreldin and any other copyright holder
-identified in the Software.
+**"Author"** means Saeed Badreldin and any other copyright holder who has expressly authorized distribution of their contributions under this license.
 
-"Commercial Use" means using, selling, licensing, distributing,
-or otherwise exploiting the Software for commercial advantage
-or monetary compensation, including its incorporation into
-commercial products or services.
+**"Commercial Use"** means using, selling, sublicensing, distributing, or otherwise exploiting the Software, in whole or in part, primarily for commercial advantage, business purposes, or monetary compensation. This includes incorporating the Software into a commercial product or service.
 
-2. PERMITTED USE
+## 2. PERMITTED USE
 
-Permission is hereby granted to any person to:
+Subject to the terms and conditions of this license, permission is hereby granted to any person to:
 
-- View, read, study, and learn from the Software.
-- Use the Software for personal, educational, and research
-  purposes that are non-commercial.
+- View, read, inspect, study, and learn from the Software.
+- Use the Software for personal, educational, and research purposes that are non-commercial.
 - Modify the Software for non-commercial purposes.
-- Redistribute original or modified copies free of charge
-  for non-commercial purposes, subject to this license.
+- Redistribute original or modified copies of the Software, free of charge, for non-commercial purposes, subject to this license.
 
-3. CONDITIONS
+No other rights are granted except those expressly stated in this license.
+
+## 3. CONDITIONS OF REDISTRIBUTION
 
 Any redistribution of the Software or modified versions must:
 
-- Retain this license and all copyright notices.
-- Clearly identify any modifications made.
-- Preserve the original attribution to Saeed Badreldin
-  and Helwan Linux.
-- Not misrepresent the original Author or project.
-- Not impose additional restrictions that prevent recipients
-  from exercising the permissions granted by this license.
+- Include a complete copy of this license.
+- Retain all applicable copyright notices and attribution notices.
+- Clearly identify significant modifications made to the Software.
+- Preserve the attribution to Saeed Badreldin and Helwan Linux where applicable.
+- Not falsely claim authorship of the original Software or misrepresent the relationship with the original project.
+- Not impose additional restrictions that conflict with the rights expressly granted by this license.
 
-4. COMMERCIAL USE
+## 4. COMMERCIAL USE
 
-Commercial Use of the Software, in whole or in part, is prohibited
-without prior written permission from the Author or the applicable
-copyright holder.
+Commercial Use of the Software, in whole or in part, is prohibited unless prior written permission has been obtained from the applicable copyright holder.
 
-Commercial permission may be granted under a separate agreement
-and may be subject to fees and additional conditions.
+Commercial permission may be granted under a separate written agreement and may be subject to fees, conditions, or other restrictions.
 
-5. OWNERSHIP
+Nothing in this section grants permission to use third-party components beyond the rights available under their respective licenses.
 
-The Software remains the property of its respective copyright
-holders. This license does not transfer ownership of the original
-Software or its copyright.
+## 5. OWNERSHIP AND COPYRIGHT
 
-6. THIRD-PARTY COMPONENTS
+The Software remains the intellectual property of its respective copyright holders.
 
-This license applies only to material for which the Author has
-the legal right to grant these permissions. Third-party components
-remain subject to their respective licenses.
+This license does not transfer ownership of the Software or its copyright to any recipient.
 
-7. TERMINATION
+Copyright in original modifications remains with their respective authors, subject to the rights granted under this license and any applicable third-party licenses.
 
-Any rights granted under this license terminate automatically
-if the recipient violates its terms. Rights may be reinstated
-if the violation is corrected and the Author agrees in writing.
+## 6. THIRD-PARTY COMPONENTS
 
-8. DISCLAIMER OF WARRANTY
+This license applies only to materials for which the applicable copyright holder has the legal right to grant the permissions stated herein.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
-AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY
-ARISING FROM THE SOFTWARE OR ITS USE.
+Third-party components, libraries, assets, and other materials remain subject to their respective licenses.
 
-9. GOVERNING LAW
+Where a third-party license conflicts with this license, the third-party license governs the relevant component to the extent required by law.
 
-The governing law and resolution of disputes shall be determined
-in accordance with applicable law and any valid agreement
-between the parties.
+Redistributors are responsible for complying with all applicable third-party license obligations.
+
+## 7. TERMINATION
+
+The rights granted under this license terminate automatically if a recipient materially violates its terms.
+
+Where the violation can be corrected, the recipient may request reinstatement of the rights by correcting the violation and obtaining written confirmation from the applicable copyright holder.
+
+Termination does not eliminate obligations or liabilities arising before termination, to the extent permitted by applicable law.
+
+## 8. DISCLAIMER OF WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## 9. GOVERNING LAW
+
+This license shall be interpreted in accordance with applicable law.
+
+Any disputes arising out of or relating to this license shall be resolved in accordance with applicable law and any valid written agreement between the parties.
+
+Nothing in this section excludes any mandatory legal rights or protections that cannot lawfully be excluded.
