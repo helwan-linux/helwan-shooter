@@ -3,7 +3,7 @@
 
 pkgname=shooter
 pkgver=0.1.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Mouse-aim arcade target-shooting game"
 arch=('x86_64')
 url="https://github.com/helwan-linux/helwan-shooter"

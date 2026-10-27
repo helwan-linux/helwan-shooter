@@ -11,7 +11,9 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
+	"unicode"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
@@ -42,6 +44,7 @@ const (
 	survivalScreen
 	achievementsScreen
 	leaderboardScreen
+	nameScreen
 )
 
 type targetKind int
@@ -161,6 +164,8 @@ type Game struct {
 	audioContext     *audio.Context
 	musicPlayer      *audio.Player
 	localLeaderboard []LeaderboardEntry
+	playerData       PlayerData
+	playerNameInput  string
 }
 
 var worldNames = []string{
@@ -194,25 +199,14 @@ func New() *Game {
 	ebiten.SetVsyncEnabled(true)
 
 	g := &Game{
-		screen: menuScreen,
-		save: saveData{
-			UnlockedLevel: 1,
-			Stars:         make(map[int]int),
-			BestScores:    make(map[int]int),
-			Sound:         true,
-			Achievements:  make(map[string]bool),
-		},
-		localLeaderboard: []LeaderboardEntry{
-			{"Saeed (Helwan)", 12500},
-			{"LinuxDev", 9800},
-			{"ArchSniper", 8400},
-			{"CyberZero", 6100},
-			{"NoviceGun", 3200},
-		},
+		screen:           nameScreen,
+		save:             newSaveData(),
+		playerData:       defaultPlayerData(),
+		localLeaderboard: make([]LeaderboardEntry, 0),
 	}
 
 	g.initAudio()
-	g.loadProgress()
+	g.loadPlayerData()
 	g.initDailySeed()
 	return g
 }
@@ -298,22 +292,66 @@ func (g *Game) savePath() string {
 	return filepath.Join(configDir, "HelwanShooter", "progress.json")
 }
 
-func (g *Game) loadProgress() {
-	path := g.savePath()
-	if path == "" {
-		return
+func newSaveData() saveData {
+	return saveData{
+		UnlockedLevel: 1,
+		Stars:         make(map[int]int),
+		BestScores:    make(map[int]int),
+		Sound:         true,
+		Achievements:  make(map[string]bool),
 	}
+}
 
-	data, err := os.ReadFile(path)
+func (g *Game) loadPlayerData() {
+	data, err := LoadPlayerData()
 	if err != nil {
+		g.playerData = defaultPlayerData()
+	} else {
+		g.playerData = data
+	}
+	g.localLeaderboard = append([]LeaderboardEntry(nil), g.playerData.Leaderboard...)
+	// Always ask which profile to open. The last name is shown as a hint,
+	// not automatically selected, so another local player can sign in.
+	g.playerNameInput = ""
+}
+
+func (g *Game) activatePlayer(name string) {
+	name = strings.TrimSpace(name)
+	if name == "" {
+		g.triggerMessage("ENTER A PLAYER NAME")
+		return
+	}
+	name = normalizePlayerName(name)
+	g.playerData.PlayerName = name
+	g.loadProgress()
+	g.muted = !g.save.Sound
+	g.localLeaderboard = append([]LeaderboardEntry(nil), g.playerData.Leaderboard...)
+	g.screen = menuScreen
+	g.saveProgress()
+}
+
+func (g *Game) loadProgress() {
+	key := playerProfileKey(g.playerData.PlayerName)
+	if saved, ok := g.playerData.Profiles[key]; ok {
+		g.save = normalizeSaveData(saved)
 		return
 	}
 
-	var saved saveData
-	if json.Unmarshal(data, &saved) != nil {
-		return
+	g.save = newSaveData()
+	// Import the old shared progress.json once, for the first named profile,
+	// so existing players do not lose their campaign progress after upgrading.
+	if len(g.playerData.Profiles) == 0 {
+		path := g.legacySavePath()
+		if data, err := os.ReadFile(path); err == nil {
+			var saved saveData
+			if json.Unmarshal(data, &saved) == nil {
+				g.save = normalizeSaveData(saved)
+			}
+		}
 	}
+}
 
+func normalizeSaveData(saved saveData) saveData {
 	if saved.UnlockedLevel < 1 {
 		saved.UnlockedLevel = 1
 	}
@@ -329,27 +367,49 @@ func (g *Game) loadProgress() {
 	if saved.Achievements == nil {
 		saved.Achievements = make(map[string]bool)
 	}
+	return saved
+}
 
-	g.save = saved
-	g.muted = !saved.Sound
+func (g *Game) legacySavePath() string {
+	configDir, err := os.UserConfigDir()
+	if err != nil {
+		return ""
+	}
+	return filepath.Join(configDir, "HelwanShooter", "progress.json")
 }
 
 func (g *Game) saveProgress() {
-	path := g.savePath()
-	if path == "" {
+	if strings.TrimSpace(g.playerData.PlayerName) == "" {
 		return
 	}
+	if g.playerData.Profiles == nil {
+		g.playerData.Profiles = make(map[string]saveData)
+	}
+	g.playerData.PlayerName = normalizePlayerName(g.playerData.PlayerName)
+	g.save = normalizeSaveData(g.save)
+	g.playerData.Profiles[playerProfileKey(g.playerData.PlayerName)] = g.save
+	g.playerData.Achievements = make(map[string]bool, len(g.save.Achievements))
+	for id, unlocked := range g.save.Achievements {
+		if unlocked {
+			g.playerData.Achievements[id] = true
+		}
+	}
+	if err := SavePlayerData(g.playerData); err == nil {
+		g.localLeaderboard = append([]LeaderboardEntry(nil), g.playerData.Leaderboard...)
+	}
+}
 
-	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+func (g *Game) recordCurrentScore() {
+	if strings.TrimSpace(g.playerData.PlayerName) == "" {
 		return
 	}
-
-	data, err := json.MarshalIndent(g.save, "", "  ")
-	if err != nil {
+	if err := RecordPlayerScore(g.playerData.PlayerName, g.score); err != nil {
 		return
 	}
-
-	_ = os.WriteFile(path, data, 0644)
+	if data, err := LoadPlayerData(); err == nil {
+		g.playerData = data
+		g.localLeaderboard = append([]LeaderboardEntry(nil), data.Leaderboard...)
+	}
 }
 
 func (g *Game) triggerScreenShake(duration float64, intensity float32) {
@@ -383,10 +443,6 @@ func (g *Game) checkAchievements() {
 	if g.maxCombo >= 5 && !g.save.Achievements["combo_5"] {
 		g.save.Achievements["combo_5"] = true
 		g.triggerMessage("ACHIEVEMENT: COMBO MASTER (5x COMBO)")
-	}
-	if g.level == 50 && !g.save.Achievements["matrix_beat"] {
-		g.save.Achievements["matrix_beat"] = true
-		g.triggerMessage("ACHIEVEMENT: TRANSCENDENT (BEAT MATRIX)")
 	}
 	g.saveProgress()
 }
@@ -613,6 +669,8 @@ func (g *Game) Update() error {
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
 		switch g.screen {
+		case nameScreen:
+			return nil
 		case playScreen:
 			g.screen = pauseScreen
 			return nil
@@ -629,6 +687,8 @@ func (g *Game) Update() error {
 	}
 
 	switch g.screen {
+	case nameScreen:
+		g.updateNameScreen()
 	case menuScreen:
 		g.updateMenu()
 	case worldScreen:
@@ -660,6 +720,28 @@ func (g *Game) buttonClicked(x, y, w, h int) bool {
 		g.clickY >= y && g.clickY <= y+h
 }
 
+func (g *Game) updateNameScreen() {
+	for _, r := range ebiten.AppendInputChars(nil) {
+		if unicode.IsPrint(r) && r != '\n' && r != '\r' && len([]rune(g.playerNameInput)) < 20 {
+			g.playerNameInput += string(r)
+		}
+	}
+	if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
+		runes := []rune(g.playerNameInput)
+		if len(runes) > 0 {
+			g.playerNameInput = string(runes[:len(runes)-1])
+		}
+	}
+	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) || g.buttonClicked(400, 390, 200, 52) {
+		name := strings.TrimSpace(g.playerNameInput)
+		if name == "" {
+			g.triggerMessage("TYPE YOUR NAME FIRST")
+			return
+		}
+		g.activatePlayer(name)
+	}
+}
+
 func (g *Game) updateMenu() {
 	if g.buttonClicked(400, 190, 200, 45) {
 		g.startLevel(g.save.UnlockedLevel)
@@ -673,6 +755,9 @@ func (g *Game) updateMenu() {
 		g.screen = achievementsScreen
 	} else if g.buttonClicked(400, 465, 200, 45) {
 		g.screen = settingsScreen
+	} else if g.buttonClicked(400, 520, 200, 38) {
+		g.playerNameInput = ""
+		g.screen = nameScreen
 	}
 }
 
@@ -725,6 +810,8 @@ func (g *Game) updatePlaying() {
 	g.timer -= dt
 
 	if g.timer <= 0 || (!g.survivalMode && g.world > 1 && g.ammo <= 0 && len(g.targets) > 0) || (g.survivalMode && g.survivalLives <= 0) {
+		g.recordCurrentScore()
+		g.saveProgress()
 		g.screen = gameOverScreen
 		return
 	}
@@ -983,8 +1070,13 @@ func (g *Game) finishLevel() {
 		g.save.UnlockedLevel = g.level + 1
 	}
 
+	if g.level == totalLevels && !g.save.Achievements["matrix_beat"] {
+		g.save.Achievements["matrix_beat"] = true
+		g.triggerMessage("ACHIEVEMENT: TRANSCENDENT (BEAT MATRIX)")
+	}
 	g.soundWin()
 	g.checkAchievements()
+	g.recordCurrentScore()
 	g.saveProgress()
 	g.screen = resultScreen
 }
@@ -993,6 +1085,8 @@ func (g *Game) Draw(dst *ebiten.Image) {
 	dst.Fill(color.RGBA{13, 18, 31, 255})
 
 	switch g.screen {
+	case nameScreen:
+		g.drawNameScreen(dst)
 	case menuScreen:
 		g.drawMenu(dst)
 	case worldScreen:
@@ -1023,6 +1117,28 @@ func (g *Game) Draw(dst *ebiten.Image) {
 	g.drawCrosshair(dst)
 }
 
+func (g *Game) drawNameScreen(dst *ebiten.Image) {
+	g.drawCentered(dst, "WELCOME TO HELWAN SHOOTER", 105, color.RGBA{90, 220, 255, 255})
+	g.drawCentered(dst, "ENTER YOUR PLAYER NAME", 175, color.White)
+	g.drawCentered(dst, "Existing names load their saved campaign.", 215, color.RGBA{180, 195, 215, 255})
+	g.drawCentered(dst, "New names start a separate profile.", 245, color.RGBA{180, 195, 215, 255})
+	ebitenutil.DrawRect(dst, 300, 295, 400, 58, color.RGBA{35, 49, 73, 255})
+	ebitenutil.DrawRect(dst, 300, 295, 400, 2, color.RGBA{65, 190, 225, 255})
+	shownName := g.playerNameInput
+	if shownName == "" {
+		shownName = "Type name here..."
+	}
+	g.drawCentered(dst, shownName, 318, color.White)
+	g.drawButton(dst, 400, 390, 200, 52, "CONTINUE")
+	if g.playerData.PlayerName != "" {
+		g.drawCentered(dst, fmt.Sprintf("LAST PLAYER: %s", g.playerData.PlayerName), 470, color.RGBA{155, 190, 210, 255})
+	}
+	g.drawCentered(dst, "TYPE NAME, THEN PRESS ENTER  |  BACKSPACE: DELETE", 530, color.RGBA{140, 155, 175, 255})
+	if time.Now().Before(g.messageTill) && g.message != "" {
+		g.drawCentered(dst, g.message, 570, color.RGBA{255, 150, 130, 255})
+	}
+}
+
 func (g *Game) drawMenu(dst *ebiten.Image) {
 	g.drawCentered(dst, "HELWAN SHOOTER", 95, color.RGBA{90, 220, 255, 255})
 	g.drawCentered(dst, "COMPETITIVE EDITION", 135, color.White)
@@ -1033,9 +1149,12 @@ func (g *Game) drawMenu(dst *ebiten.Image) {
 	g.drawButton(dst, 400, 355, 200, 45, "LEADERBOARD")
 	g.drawButton(dst, 400, 410, 200, 45, "ACHIEVEMENTS")
 	g.drawButton(dst, 400, 465, 200, 45, "SETTINGS")
-
-	g.drawCentered(dst, fmt.Sprintf("DAILY SEED HASH: %s", g.getDailyHash()), 545, color.RGBA{140, 200, 160, 255})
-	g.drawCentered(dst, "ESC: PAUSE / BACK     LEFT CLICK: SHOOT", 590, color.RGBA{140, 155, 175, 255})
+	g.drawButton(dst, 400, 520, 200, 38, "CHANGE PLAYER")
+	if g.playerData.PlayerName != "" {
+		g.drawCentered(dst, fmt.Sprintf("PLAYER: %s", g.playerData.PlayerName), 165, color.RGBA{170, 205, 225, 255})
+	}
+	g.drawCentered(dst, fmt.Sprintf("DAILY SEED HASH: %s", g.getDailyHash()), 570, color.RGBA{140, 200, 160, 255})
+	g.drawCentered(dst, "ESC: PAUSE / BACK     LEFT CLICK: SHOOT", 610, color.RGBA{140, 155, 175, 255})
 }
 
 func (g *Game) getDailyHash() string {
@@ -1350,10 +1469,13 @@ func (g *Game) drawAchievements(dst *ebiten.Image) {
 }
 
 func (g *Game) drawLeaderboard(dst *ebiten.Image) {
-	g.drawCentered(dst, "LOCAL LEADERBOARD", 70, color.White)
+	g.drawCentered(dst, "LOCAL LEADERBOARD - TOP 10", 70, color.White)
+	if len(g.localLeaderboard) == 0 {
+		g.drawCentered(dst, "No scores recorded yet. Finish a level to appear here.", 160, color.RGBA{190, 205, 220, 255})
+	}
 	for i, entry := range g.localLeaderboard {
 		text := fmt.Sprintf("%d. %-15s %d PTS", i+1, entry.Name, entry.Score)
-		g.drawCentered(dst, text, 140+i*45, color.RGBA{235, 220, 120, 255})
+		g.drawCentered(dst, text, 140+i*35, color.RGBA{235, 220, 120, 255})
 	}
 	g.drawButton(dst, 400, 510, 200, 45, "BACK")
 }
